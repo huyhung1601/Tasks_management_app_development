@@ -6,23 +6,25 @@ import AddIcon from '@material-ui/icons/Add';
 import { Grid, makeStyles, Paper, InputAdornment } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search'
 import TaskItem from './TaskItem';
+import {v4} from 'uuid';
+
 
 //Fake values
 const datas=[
-    {id: '1', title: 'Start',description: '', dueDate: new Date(),
-    members: [{name: 'Henry', align: false},{name: 'Henry', align: false},{name: 'Jason', align: false}],
-    checklist: [{item: 'Design Layout', align: true},{item: 'Develope Function', algin: false},{item: 'Interior Design', algin: false}]},
-    {id: '2', title: 'Build Up',description: '', dueDate: new Date(),
-    members: [{name: 'Me', align: false}],checklist: [{item: 'item2', algin: true}]},
-    {id: '3', title: 'Mockup',description: '', dueDate: new Date(),
-    members: [{name: 'Jason', align: false}],checklist: [{item: 'item1', algin: true}]},
-    {id: '4', title: 'Test',description: '', dueDate: new Date(),
-    members: [{name: 'Henry', align: false},{name: 'Henry', align: false},{name: 'Jason', align: false}],
+    {id: v4(), title: 'Start',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: true},{name: 'Henry', align: false},{name: 'Jason', align: false},{name: 'stranger', align: false}],
+    checklist: [{item: 'Design Layout', align: true},{item: 'Mock up', align: true}]},
+    {id: v4(), title: 'Build Up',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: true},{name: 'Henry', align: true},{name: 'Jason', align: true},{name: 'stranger', align: false}],checklist: [{item: 'item2', algin: true}]},
+    {id: v4(), title: 'Mockup',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: false},{name: 'Henry', align: false},{name: 'Jason', align: false},{name: 'stranger', align: false}],checklist: [{item: 'item1', algin: true}]},
+    {id: v4(), title: 'Test',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: false},{name: 'Henry', align: false},{name: 'Jason', align: false},{name: 'stranger', align: false}],
     checklist: [{item: 'Design Layout', align: true},{item: 'Develop Function', algin: false}]},
-    {id: '5', title: 'Apply',description: '', dueDate: new Date(),
-    members: [{name: 'Me', align: false}],checklist: [{item: 'item2', algin: true}]},
-    {id: '6', title: 'Others',description: '', dueDate: new Date(),
-    members: [{name: 'Jason', align: false}],checklist: [{item: 'item1', algin: true}]},
+    {id: v4(), title: 'Apply',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: true},{name: 'Henry', align: true},{name: 'Jason', align: false},{name: 'stranger', align: false}],checklist: [{item: 'item2', algin: true}]},
+    {id: v4(), title: 'Others',description: '', dueDate: new Date(),
+    members: [{name: 'Me', align: false},{name: 'Henry', align: true},{name: 'Jason', align: false},{name: 'stranger', align: false}],checklist: [{item: 'item1', algin: true}]},
 ]
 
 const useStyles = makeStyles((theme)=>({
@@ -32,25 +34,36 @@ const useStyles = makeStyles((theme)=>({
 }))
 const DashBoard = () => {
     const classes= useStyles()
-    const [taskList, updateTaskList] = useState([]);
+    const [taskList, updateTaskList] = useState(datas);
     const [openPopup, setOpenPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState()
     
   
-    // effect on page load
-    useEffect(()=>{
-        // call server
-        // get task list
-        updateTaskList(datas)
-    },[]);
+    // // effect on page load
+    // useEffect(()=>{
+    //     // call server
+    //     // get task list
+    //     updateTaskList(datas)
+    // },[]);
     
 
-    //EditRecord
+    //Add or Edit Record
     const editRecord=(values)=>{
         setOpenPopup(true)
         setRecordForEdit(values)
     }
 
+    const createTask = data =>{
+        if (taskList.every(x=>x.id!== data.id)){
+            const newList=[...taskList,data]
+            updateTaskList(newList)
+        } else {
+            const x= taskList.filter(x=>x.id===data.id)
+            const index = taskList.indexOf(x[0])
+            const a = taskList.splice(index,1,data)
+        }
+    }
+ 
     //Search (make a new filtered list)
     const [filter,setFilter] = useState(null)
     const handleSearch = e =>{
@@ -71,6 +84,7 @@ const DashBoard = () => {
                         onClick={() => {setOpenPopup(true); setRecordForEdit(null)} }
                     />
                 </Grid>
+
                 <Grid item xs ={3}>
                     <Controls.Input
                         label='Search'
@@ -87,9 +101,9 @@ const DashBoard = () => {
             </Grid>             
             <Grid item xs={12}container direction='row' spacing={2}>
                 {filter === null ? taskList.map((item,index)=>(
-                    <TaskItem values={item} key={item.id}  editRecord={(values)=>{editRecord(values)}}/>
+                    <TaskItem values={item} key={index}  editRecord={(values)=>{editRecord(values)}}/>
                 )): filter.map((item,index)=>(
-                    <TaskItem values={item} key={item.id}  editRecord={(values)=>{editRecord(values)}}/>
+                    <TaskItem values={item} key={index}  editRecord={(values)=>{editRecord(values)}}/>
                 ))}
             </Grid>
             </Grid>
@@ -101,6 +115,7 @@ const DashBoard = () => {
             setOpenPopup={setOpenPopup}
         >
             <NewTask
+                createTask={(data)=>createTask(data)}
                 recordForEdit={recordForEdit}
                 setOpenPopup={()=>setOpenPopup(false)}
             />

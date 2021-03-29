@@ -18,6 +18,9 @@ const Admin = () => {
             <Router>  
                 <Switch>
                 <Route exact path={`${path}`} component={DashBoard}/>
+                <Route exact path={`${path}/heloo`}>
+                    Hello
+                </Route>
                             
                 </Switch>     
             

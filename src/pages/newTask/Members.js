@@ -58,7 +58,6 @@ const Members = (props) => {
                 className={classes.chip}
                 avatar={<Avatar>{member.name.charAt(0)}</Avatar>}
                 color="primary"
-                deleteIcon={<DoneIcon />}
                 label={member.name}
                 onDelete={()=>handleTagMembers(member)}
                 variant='outlined'

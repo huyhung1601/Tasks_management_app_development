@@ -1,6 +1,7 @@
 import { AppBar, Grid, makeStyles, Toolbar } from '@material-ui/core'
 import React from 'react'
 import Controls from './controls/Controls'
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme)=>({
     root:{
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme)=>({
 }))
 
 const Header = () => {
-
+    const history = useHistory()
     const classes= useStyles();
     return (
         <Toolbar >
@@ -32,7 +33,8 @@ const Header = () => {
                         <Controls.Button
                             className={classes.button}
                             color='42a5f5'
-                            text="Log out"                           
+                            text="Log out"  
+                            onClick={()=>history.push('/')}                         
                         />
                     </Grid>
                 </Grid>

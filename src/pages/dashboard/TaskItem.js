@@ -1,7 +1,8 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, Chip, Grid, Icon, IconButton, makeStyles, Tooltip } from '@material-ui/core'
+import { Avatar, Card, CardContent, CardHeader, Chip, Grid, Icon, IconButton, makeStyles, Tooltip } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit';
 import { AvatarGroup } from '@material-ui/lab';
 import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 import React from 'react'
 
 const useStyles = makeStyles((theme)=>({
@@ -15,6 +16,9 @@ const useStyles = makeStyles((theme)=>({
             background: 'inherit',
             color: 'white',
         },
+        '& .MuiCardContent-root':{
+            padding: theme.spacing(0)
+        }
     },
     chips:{
         background: 'white'
@@ -26,8 +30,9 @@ const TaskItem = (props) => {
     const classes= useStyles()
 
     const {values, editRecord} = props
+    const alignMember = values.members.filter(x=> x.align===true)
     const memberName = (
-        values.members.map((item,index)=>(
+        alignMember.map((item,index)=>(
             <div style={{flexDirection:'column'}}>
                 <Chip 
                     className={classes.chips}
@@ -67,18 +72,20 @@ const TaskItem = (props) => {
                         </IconButton>
                     }
                 />
-                <CardContent>
+                <CardContent className={classes.CardContent}>
                     <div style={{display: 'flex'}}>
                         <Tooltip title={memberName}>
                             <AvatarGroup max={2} size='small' style={{flexGrow: 1}}>
-                                {values.members.map((item, index)=>(
+                                {alignMember.length < 1 ? <Avatar>?</Avatar>:
+                                alignMember.map((item, index)=>(
                                     <Avatar key={index} >{item.name.charAt(0)}</Avatar>
                                 ))}
                             </AvatarGroup>
                         </Tooltip>
                     <Tooltip title={items} >
                         <IconButton variant='outline'>
-                            <SpeakerNotesIcon/>
+                           { values.checklist.every(x=>x.align===true)? <DoneAllIcon/>:
+                           <SpeakerNotesIcon/>}
                         </IconButton>
                     </Tooltip>
                     </div>

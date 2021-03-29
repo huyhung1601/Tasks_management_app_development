@@ -1,4 +1,4 @@
-import { Grid, makeStyles,  } from '@material-ui/core'
+import { Grid, makeStyles, Typography,  } from '@material-ui/core'
 import React ,{useEffect} from 'react'
 import Controls from '../../components/controls/Controls';
 import CardItem from '../../components/CardItem';
@@ -6,12 +6,14 @@ import CardItem from '../../components/CardItem';
 import Checklist from './Checklist';
 import Members from './Members';
 import { useForm } from '../../components/useForm';
+import { v4 } from 'uuid';
 
 
 const initialdata = {
     success: '',
     error: '',
     data: {
+        id: v4(),
         title: '',
         description: '',
         dueDate: new Date(),
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme)=>({
 
 const NewTask = (props) => {
     const classes = useStyles();
-    const {setOpenPopup, recordForEdit} = props
+    const {setOpenPopup, recordForEdit,createTask} = props
     //Extract useForm
     const{values, handleInputChange, resetForm, handleChecklist, handleChangeItemTitle,
         handleCheckItems, handleDeleteItem,setValues,handleTagMembers,}
@@ -46,9 +48,9 @@ const NewTask = (props) => {
     const handleSubmit =(e)=>{
         e.preventDefault()
         // send data to server
-        console.log(values)
         resetForm()
         setOpenPopup()
+        createTask(values)
     }
     //Edit
     useEffect(() => {
@@ -62,6 +64,7 @@ const NewTask = (props) => {
     return (
         
         <form className={classes.root} onSubmit={handleSubmit}>
+            <Typography>Data sent to sever after being submitted</Typography>
             <pre><code>{JSON.stringify(values)}</code></pre>
             <Grid container spacing={1}>
                 <Grid item xs={8} container direction='column'>

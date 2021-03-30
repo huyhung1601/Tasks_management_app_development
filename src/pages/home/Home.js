@@ -21,7 +21,7 @@ const useStyle = makeStyles((theme)=>({
         '& .MuiFormControl-root':{
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
-            minWidth: '80%'
+            minWidth: '90%'
         }
     },
     header:{

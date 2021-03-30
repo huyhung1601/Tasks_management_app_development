@@ -64,8 +64,8 @@ const NewTask = (props) => {
     return (
         
         <form className={classes.root} onSubmit={handleSubmit}>
-            <Typography>Data sent to sever after being submitted</Typography>
-            <pre><code>{JSON.stringify(values)}</code></pre>
+            {/* <Typography>Data sent to sever after being submitted</Typography>
+            <pre><code>{JSON.stringify(values)}</code></pre> */}
             <Grid container spacing={1}>
                 <Grid item xs={8} container direction='column'>
                     <Grid item xs>

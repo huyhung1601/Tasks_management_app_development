@@ -21,7 +21,8 @@ const useStyle = makeStyles((theme)=>({
         '& .MuiFormControl-root':{
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
-            minWidth: '90%'
+            minWidth: '90%',
+            
         }
     },
     header:{
@@ -44,8 +45,8 @@ const Home = () => {
         < div >
         <Grid container className={classes.background}>
             <Grid item sm/>
-            <Grid item xs={4} className={classes.root} >
-                <Card >
+            <Grid item xs={2.5} className={classes.root} >
+                <Card style={{width:'400px'}}>
                     <CardContent>
                         <div className={classes.content} method='post'>
                             <div className={classes.header}/>

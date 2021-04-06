@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-export const useForm = (initialValues) => {
+export const useForm = (initialValues,validateOnChange = false, validate) => {
 
     const [ values, setValues] = useState(initialValues)
     const [errors, setErrors] = useState({})
@@ -9,6 +9,8 @@ export const useForm = (initialValues) => {
     const handleInputChange = (name,value) =>{
         const newData= {...values, [name]: value}
         setValues(newData)
+        if(validateOnChange)
+        validate({[name] : value})
     }
     /**Add Items Checklist */
     const handleChecklist = (title)=>{

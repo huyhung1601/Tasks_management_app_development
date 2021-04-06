@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme=>({
 const CardItem = (props) => {
     const classes= useStyles();
 
-    const{children, title,...other} = props
+    const{children, title,} = props
     return (
         <Card variant='outlined' className={classes.root} >
             <Typography variant='subtitle2' >{title}</Typography>

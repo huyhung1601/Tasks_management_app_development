@@ -1,7 +1,5 @@
 import {Card, CardContent, Grid, makeStyles, Typography, InputAdornment, IconButton } from '@material-ui/core'
-
-import React,{useState} from 'react'
-
+import React from 'react'
 import {useRouteMatch} from 'react-router-dom'
 import Register from './Register';
 import Login from './Login';

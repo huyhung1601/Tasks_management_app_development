@@ -7,10 +7,10 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 const PasswordInput = (props) => {
     const {name, label, value, error=null, onChange, variant, ...other} = props
 
-    const[showPassword, setShowPassword] = useState(false)
-    const handleShowPassWord = e=>{
+    const[showpassword, setShowpassword] = useState(false)
+    const handleShowpassWord = e=>{
         e.preventDefault()
-        setShowPassword(!showPassword)
+        setShowpassword(!showpassword)
     }
 
     return (
@@ -21,18 +21,18 @@ const PasswordInput = (props) => {
             name={name}
             value={value}
             onChange={onChange} 
-            type={showPassword ? 'text' : 'password'}   
+            type={showpassword ? 'text' : 'password'}   
             {...error && {error: true, helperText: error}}
             InputProps={{
                 endAdornment:
                     <InputAdornment position="end">
                         <IconButton
                             aria-label="toggle password visibility"
-                            onClick={handleShowPassWord}
+                            onClick={handleShowpassWord}
                             edge="end"
-                            showPassword='showPassword'
+                            
                         >
-                            {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                            {showpassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                         </IconButton>
                     </InputAdornment>
             }} 

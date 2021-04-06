@@ -16,6 +16,7 @@ const DatePicker = (props) => {
             <KeyboardDatePicker disableToolbar variant='inline' inputVariant='outlined'
                 label={label}
                 formate='MM/dd/yyyy'
+                id="date-picker-inline"
                 name={name}
                 value={value}
                 onChange={date=>onChange(convertToDefEventPara(name,date))}

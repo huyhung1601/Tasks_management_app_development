@@ -5,7 +5,7 @@ import NewTask from './newTask/NewTask'
 import {useRouteMatch} from 'react-router-dom'
 import Header from '../components/Header';
 
-
+import {GlobalProvider} from '../context/GlobalState'
 
 /**
  * Admin Layout
@@ -13,7 +13,7 @@ import Header from '../components/Header';
 const Admin = () => {
     const { path } = useRouteMatch();
     return (
-        <>  
+        <GlobalProvider>  
             <Header/>            
             <Router>  
                 <Switch>
@@ -25,7 +25,7 @@ const Admin = () => {
                 </Switch>     
             
             </Router>
-        </>
+        </GlobalProvider>
     );
 }
 

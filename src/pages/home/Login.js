@@ -1,4 +1,4 @@
-import { ButtonBase, Typography,InputAdornment,IconButton } from '@material-ui/core'
+import { ButtonBase, Typography,InputAdornment } from '@material-ui/core'
 import React from 'react'
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
 import {useHistory} from "react-router-dom";
@@ -12,19 +12,23 @@ const initialValues ={
 
 const Login = (props) => {
     const {login} = props
-    const history=useHistory()
-    const {handleInputChange, values, errors,setErrors} = useForm(initialValues)
+    const history=useHistory()    
     //Validation
-    const validate = () =>{
-        let temp= {}        
-        temp.email = (!values.email)? 'This Field is required ' : 
+    const validate = (fieldValues = values) =>{
+        let temp= {...errors} 
+        if('email' in fieldValues)      
+        temp.email = (!fieldValues.email)? 'This Field is required ' : 
         (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) ? 'Email is not valid':''
-        temp.password = values.password? '' : 'This Field is required '
+        if('password' in fieldValues)
+        temp.password = fieldValues.password? '' : 'This Field is required '
         setErrors({
             ...temp
         })
+
+        if(fieldValues = values)
         return Object.values(temp).every(x => x==='')
     }
+    const {handleInputChange, values, errors,setErrors} = useForm(initialValues, true, validate)
     //Login
     const handleLogin = (e) => {
         e.preventDefault()

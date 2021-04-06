@@ -1,18 +1,15 @@
-import { Grid, makeStyles, Typography,  } from '@material-ui/core'
-import React ,{useEffect} from 'react'
+import { Grid, makeStyles,} from '@material-ui/core'
+import React ,{useContext, useEffect} from 'react'
 import Controls from '../../components/controls/Controls';
 import CardItem from '../../components/CardItem';
-
 import Checklist from './Checklist';
 import Members from './Members';
 import { useForm } from '../../components/useForm';
 import { v4 } from 'uuid';
+import {GlobalContext} from '../../context/GlobalState'
 
 
 const initialdata = {
-    success: '',
-    error: '',
-    data: {
         id: v4(),
         title: '',
         description: '',
@@ -20,8 +17,6 @@ const initialdata = {
         members: [{name: 'Me', align: true},{name: 'Henry', align: false},{name: 'Jason', align: false},{name: 'stranger', align: false}],
         checklist: []
     }
-}
-const {success, error, data} = initialdata
 
 const useStyles = makeStyles((theme)=>({       
     root:{
@@ -39,18 +34,19 @@ const useStyles = makeStyles((theme)=>({
 
 const NewTask = (props) => {
     const classes = useStyles();
-    const {setOpenPopup, recordForEdit,createTask} = props
+    const {setOpenPopup, recordForEdit,taskListIndex} = props
+    const {editRecord} = useContext(GlobalContext)
     //Extract useForm
     const{values, handleInputChange, resetForm, handleChecklist, handleChangeItemTitle,
         handleCheckItems, handleDeleteItem,setValues,handleTagMembers,}
-        = useForm(data)
+        = useForm(initialdata)
     //OnSubmit
     const handleSubmit =(e)=>{
-        e.preventDefault()
+        e.preventDefault()        
         // send data to server
         resetForm()
         setOpenPopup()
-        createTask(values)
+        editRecord(values,taskListIndex)
     }
     //Edit
     useEffect(() => {

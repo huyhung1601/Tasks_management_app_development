@@ -43,7 +43,7 @@ const Home = () => {
         < div >
         <Grid container className={classes.background}>
             <Grid item sm/>
-            <Grid item xs={2.5} className={classes.root} >
+            <Grid item xs={3} className={classes.root} >
                 <Card style={{width:'400px'}}>
                     <CardContent>
                         <div className={classes.content} method='post'>
